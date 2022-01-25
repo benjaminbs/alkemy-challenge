@@ -1,0 +1,55 @@
+import logo from './logo.svg';
+import './App.css';
+import { useState, useEffect } from 'react';
+import Axios from 'axios';
+import Table from 'react-bootstrap/Table';
+//import { response } from 'express';
+
+function App() {
+
+	const [records, setRecords] = useState([]);
+
+	useEffect(()=>{
+		Axios.get('http://localhost:3001/api').then((response)=>{
+			//const data = response.data;
+			setRecords(response.data);
+			//console.log(setUsers)
+		});
+	}, []);
+
+  return (
+    <div className="App">
+      <div className="form">
+		<Table>
+			
+		</Table>
+		<table>
+			<thead>
+				<tr>
+					<th>Concept</th>
+					<th>Amount</th>
+					<th>Category</th>
+					<th>Date created</th>
+				</tr>
+			</thead>
+			<tbody>
+				{records.map((val)=>{
+					return 	<tr>
+								<td>{val.concept}</td>
+								<td>{val.amount}</td>
+								<td>{val.category}</td>
+								<td>{val.dateCreated}</td>
+							</tr>
+				})}
+				
+			</tbody>
+		</table>
+
+		<button ></button>
+
+	  </div>
+    </div>
+  );
+}
+
+export default App;

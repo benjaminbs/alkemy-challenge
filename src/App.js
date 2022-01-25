@@ -2,33 +2,42 @@ import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
 import Axios from 'axios';
-//import { response } from 'express';
+import {Navbar, Container, Nav, NavDropdown} from 'react-bootstrap';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import {BrowserRouter as Router, Routes, Route, Link as Links} from 'react-router-dom';
+import Home from './Pages/Home';
+import Operations from './Pages/Operations';
+import Error from './Pages/ErrorPage';
 
 function App() {
 
-	const [userName, setUserName] = useState('');
-	const [userEmail, setUserEmail] = useState('');
 
-	useEffect(()=>{
-		Axios.get('http://localhost:3001/api').then((response)=>{
-			console.log(response.data)
-		})
-	}, [])
-
-  return (
-    <div className="App">
-      <div className="form">
-		<input type="text" name="userName" onChange={(e)=>{
-			setUserName(e.target.value)
-		}}></input>
-		<input type="text" name="userEmail" onChange={(e)=>{
-			setUserEmail(e.target.value)
-		}}></input>
-
-		<button ></button>
-
-	  </div>
-    </div>
+  return( 
+	<Router>
+		<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+			<Container>
+			<Navbar.Brand>Bienvenido</Navbar.Brand>
+			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+			<Navbar.Collapse id="responsive-navbar-nav">
+				<Nav className="me-auto">
+					<Nav.Link href="/">Home</Nav.Link>
+					<Nav.Link href="/Operations">Operations</Nav.Link>
+					<Nav.Link href="#">Expenses</Nav.Link>
+				</Nav>
+				<Nav>
+					<Nav.Link eventKey={2} href="#memes">
+						Exit
+					</Nav.Link>
+				</Nav>
+			</Navbar.Collapse>
+			</Container>
+		</Navbar>
+		<Routes>
+			<Route path="/" element={<Home />} />
+			<Route path="/Operations" element={<Operations />} />
+			<Route path="*" element={<Error />} />
+		</Routes>
+	</Router>
   );
 }
 
